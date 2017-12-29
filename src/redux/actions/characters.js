@@ -8,7 +8,14 @@ import { fetch } from 'pruebas_marvel/src/webservices/webservices'
 function updateCharactersList(value) {
     return {
         type: types.CHARACTERS_UPDATE_LIST,
-        value: value,
+        value
+    }
+}
+
+function setCharactersFetching(value) {
+    return {
+        type: types.CHARACTERS_SET_FETCHING,
+        value
     }
 }
 
@@ -21,14 +28,17 @@ export function updateCharacterSelected(value) {
 
 export function fetchCharactersList() {
     return (dispatch, getState) => {
+        dispatch(setCharactersFetching(true))
         const fetchUrl = '/characters?apikey=' + API_KEY;
         
         fetch(fetchUrl).then(response => {
-            console.log("fetch response: ", response)
+            console.log("fetch character response: ", response)
+            dispatch(setCharactersFetching(false))
             const list = response.data.results
             dispatch(updateCharactersList(list))
         }).catch( error => {
-            console.log('error: ', error)
+            //console.log('error: ', error)
+            dispatch(setCharactersFetching(false))
         })
     }
 }

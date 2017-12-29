@@ -13,9 +13,13 @@ import * as webservices from 'pruebas_marvel/src/webservices/webservices';
 //Import COMPONENTS
 import CharacterList from 'pruebas_marvel/src/sections/characters/CharacterList';
 import CharacterView from 'pruebas_marvel/src/sections/characters/CharacterView';
+import CharacterNew from 'pruebas_marvel/src/sections/characters/CharacterNew';
 import ComicsList from 'pruebas_marvel/src/sections/comics/ComicsList';
+import ComicView from 'pruebas_marvel/src/sections/comics/ComicView';
 import EventsList from 'pruebas_marvel/src/sections/events/EventsList';
+import EventView from 'pruebas_marvel/src/sections/events/EventView';
 import SeriesList from 'pruebas_marvel/src/sections/series/SeriesList';
+import SerieView from 'pruebas_marvel/src/sections/series/SerieView';
 
 //Import COMMONS
 import { Colors } from 'pruebas_marvel/src/commons';
@@ -33,8 +37,6 @@ const store = createStore(  //Creamos el store con:
 
 export default class App extends Component {
 
-    //renderRightButton={ () => this.renderAddCharacterButton()}
-
     componentWillMount() {
         webservices.configureAxios()
         StatusBar.setBarStyle('light-content')
@@ -48,6 +50,14 @@ export default class App extends Component {
         )
     }
 
+    renderAddCharacterButton() {
+        return (
+            <TouchableOpacity style={styles.addButton} onPress={ () => Actions.CharacterNew() }>
+                <Text style={styles.addButtonText}>{'+'}</Text>
+            </TouchableOpacity>
+        )
+    }
+
     render() {
         console.disableYellowBox = true
         return (
@@ -57,9 +67,38 @@ export default class App extends Component {
                         <Scene
                             key={'CharacterList'}
                             component={ CharacterList }
+                            title={'MARVEL CHARACTERS'}
                             navigationBarStyle={styles.navBar}
                             navBarButtonColor={'white'}
-                            
+                            renderRightButton={ () => this.renderAddCharacterButton()}
+                        />
+                        <Scene
+                            key={'CharacterNew'}
+                            component={ CharacterNew }
+                            navigationBarStyle={styles.navBar}
+                            navBarButtonColor={'white'}
+                            title={'Añadir'}
+                        />
+                        <Scene 
+                            key={'ComicView'}
+                            component={ ComicView }
+                            navigationBarStyle={styles.navBar}
+                            navBarButtonColor={'white'}
+                            renderLeftButton={ () => this.renderBackButton()}
+                        />
+                        <Scene 
+                            key={'EventView'}
+                            component={ EventView }
+                            navigationBarStyle={styles.navBar}
+                            navBarButtonColor={'white'}
+                            renderLeftButton={ () => this.renderBackButton()}
+                        />
+                        <Scene 
+                            key={'SerieView'}
+                            component={ SerieView }
+                            navigationBarStyle={styles.navBar}
+                            navBarButtonColor={'white'}
+                            renderLeftButton={ () => this.renderBackButton()}
                         />
                         <Scene
                             key={'TabBar'}
@@ -116,7 +155,7 @@ const styles = StyleSheet.create({
     },
     addButtonText: {
       color: 'white',
-      fontSize: 15,
+      fontSize: 20,
       backgroundColor: Colors.navBar
     },
     addButton: {

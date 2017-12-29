@@ -6,15 +6,14 @@ import { Platform, View, TouchableOpacity, Text, Image, StyleSheet, Dimensions }
 
 export default class SeriesCell extends Component {
     //PROPIEDADES POR DEFECTO
-    //Sirven para prevenir fallos y documentar el componente
     static defaultProps = {
         item    : {},
-        onPress : () => {}
+        onCellTapped : () => {}
     }
 
     //RENDER
     render() {
-        const { item } = this.props;
+        const { item, onCellTapped } = this.props;
         const name = item.title ? item.title : '';
         const description = item.description ? item.description : '';
         let image = item.thumbnail.path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" ? { uri: item.thumbnail.path + '.' + item.thumbnail.extension} : require ('pruebas_marvel/src/resources/image_not_available.jpeg');
@@ -23,8 +22,9 @@ export default class SeriesCell extends Component {
         const series = item.series ? item.series : null;
     
         return (
-        
-            <TouchableOpacity style={ styles.container }>
+            <TouchableOpacity 
+                style={ styles.container }
+                onPress={ () => onCellTapped(item) }>
                 <Image 
                     source={ image } 
                     style={ styles.image } 
@@ -40,8 +40,11 @@ export default class SeriesCell extends Component {
 //ESTILOS
 const styles = StyleSheet.create ({
     image: {
-        width: '100%',
-        height: 200,
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
     },
     textContainer: {
         flexDirection: 'row',
@@ -60,8 +63,9 @@ const styles = StyleSheet.create ({
         color: 'white',
     },
     container: {
-        width: Dimensions.get('window').width / 2, 
-        height: Dimensions.get('window').width / 2,
+        margin: 5,
+        width: Dimensions.get('window').width / 2 - 10, 
+        height: (Dimensions.get('window').width / 2 - 10) * (835/550),
 
         ...Platform.select({
             ios: {

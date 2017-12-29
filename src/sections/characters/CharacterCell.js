@@ -5,8 +5,8 @@ import React, { Component } from 'react'
 import { Platform, View, TouchableOpacity, Text, Image, StyleSheet, Dimensions } from 'react-native'
 
 export default class CharacterCell extends Component {
+    
     //PROPIEDADES POR DEFECTO
-    //Sirven para prevenir fallos y documentar el componente
     static defaultProps = {
         onCellTapped   : () => {},
         item       : {},
@@ -30,7 +30,7 @@ export default class CharacterCell extends Component {
                 <Image 
                     source={ image } 
                     style={ styles.image } 
-                    resizeMode={ 'stretch' }/>
+                    resizeMode={ 'stretch' } />
                 <View style={ styles.textContainer }>
                     <Text style={ styles.name }>{ name }</Text>
                 </View>
@@ -42,8 +42,11 @@ export default class CharacterCell extends Component {
 //ESTILOS
 const styles = StyleSheet.create ({
     image: {
-        width: '100%',
-        height: 200,
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
     },
     textContainer: {
         flexDirection: 'row',

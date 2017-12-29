@@ -7,22 +7,9 @@ import { View, StyleSheet, Image, Text, Dimensions, ScrollView } from 'react-nat
 //Import COMMONS
 import { Colors } from 'pruebas_marvel/src/commons'
 
-//Import COMPONENTS
-import Spinner from 'react-native-spinkit'
-
-export default class CharacterView extends Component {
+export default class SerieView extends Component {
 
     //RENDER
-    renderActivityOn() {
-        console.log('Entro en imagen')
-        return <Spinner
-            style={ styles.spinner } 
-            isVisible={ this.props.isFetching }
-            size={150}
-            type='WordPress'
-            color='white'/>
-    }
-
     render() {
         const item = this.props.item;
         const name = item.name ? item.name : '';
@@ -35,8 +22,7 @@ export default class CharacterView extends Component {
         return (
             <ScrollView style={styles.container}>
 
-                <Image source={ image } style={ styles.image } resizeMode={ 'cover'} 
-                onLoadStart={ (e) => this.renderActivityOn() } /> 
+                <Image source={ image } style={ styles.image } resizeMode={ 'contain'}  /> 
                 <View style={styles.textContainer}>
                     <Text style={styles.name}>{ name }</Text>
                     <Text style={styles.description}>{ description }</Text>
@@ -73,11 +59,6 @@ const styles = StyleSheet.create({
 
     image: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').width,
-    },
-    spinner: {
-        position: 'absolute',
-        top: Dimensions.get('window').height / 3, 
-        left: Dimensions.get('window').width / 3, 
+        height: 400,
     },
 });

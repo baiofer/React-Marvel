@@ -1,4 +1,4 @@
-import * as types from '../types/characters'
+import * as types from '../types/series'
 
 const initialState = {
     list: [],
@@ -8,7 +8,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
-        case types.CHARACTERS_UPDATE_LIST:
+        case types.SERIES_UPDATE_LIST:
             return {
                 ...state,
                 list: action.value
@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action = {}) {
                 ...state,
                 item: action.value
             };
-        case types.CHARACTERS_SET_FETCHING:
+        case types.SERIES_SET_FETCHING:
             return {
                 ...state,
                 isFetching: action.value
