@@ -10,11 +10,14 @@ import { Colors } from 'pruebas_marvel/src/commons'
 //Import COMPONENTS
 import Spinner from 'react-native-spinkit'
 
-export default class CharacterView extends Component {
+//Import REDUX
+import { connect } from 'react-redux'
+import * as CharactersActions from 'pruebas_marvel/src/redux/actions/characters'
+
+class CharacterView extends Component {
 
     //RENDER
     renderActivityOn() {
-        console.log('Entro en imagen')
         return <Spinner
             style={ styles.spinner } 
             isVisible={ this.props.isFetching }
@@ -38,7 +41,6 @@ export default class CharacterView extends Component {
                 <Image source={ image } style={ styles.image } resizeMode={ 'cover'} 
                 onLoadStart={ (e) => this.renderActivityOn() } /> 
                 <View style={styles.textContainer}>
-                    <Text style={styles.name}>{ name }</Text>
                     <Text style={styles.description}>{ description }</Text>
                 </View>
 
@@ -46,6 +48,15 @@ export default class CharacterView extends Component {
         )
     }
 }
+
+//REDUX
+const mapStateToProps = (state) => {
+    return {
+        item: state.characters.item,
+    }
+}
+
+export default connect(mapStateToProps, null)(CharacterView)
 
 //ESTILOS
 const styles = StyleSheet.create({

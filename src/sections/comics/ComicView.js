@@ -7,12 +7,15 @@ import { View, StyleSheet, Image, Text, Dimensions, ScrollView } from 'react-nat
 //Import COMMONS
 import { Colors } from 'pruebas_marvel/src/commons'
 
-export default class ComicView extends Component {
+//Imports REDUX
+import { connect } from 'react-redux'
+
+class ComicView extends Component {
 
     //RENDER
     render() {
         const item = this.props.item;
-        console.log('comic item: ', item)
+        console.log('comic item: ', this.props)
         if (!item) return null
         const name = item.name ? item.name : '';
         const description = item.description ? item.description : '';
@@ -34,6 +37,15 @@ export default class ComicView extends Component {
         )
     }
 }
+
+//REDUX
+const mapStateToProps = (state) => {
+    return {
+        item: state.comics.comicItem,
+    }
+}
+
+export default connect(mapStateToProps, null)(ComicView)
 
 //ESTILOS
 const styles = StyleSheet.create({

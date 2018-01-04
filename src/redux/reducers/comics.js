@@ -3,7 +3,8 @@ import * as types from '../types/comics'
 const initialState = {
     list: [],
     item: null,
-    isFetching: false
+    isFetching: false,
+    comicItem: null,
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -22,6 +23,11 @@ export default function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 isFetching: action.value
+            };
+        case types.COMICS_UPDATE_COMIC:
+            return {
+                ...state,
+                comicItem: action.value
             };
         default:
             return state;

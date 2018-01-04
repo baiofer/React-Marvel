@@ -29,6 +29,7 @@ export function updateComicSelected(value) {
 export function fetchComicsList(url) {
     return (dispatch, getState) => {
         dispatch(setComicsFetching(true))
+        dispatch(updateComicsList([]))
         const fetchUrl = url + '?apikey=' + API_KEY;
         
         fetch(fetchUrl).then(response => {

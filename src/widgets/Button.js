@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { TouchableOpacity, Text, ActivityIndicator, StyleSheet } from 'react-native'
+import Spinner from 'react-native-spinkit'
 
 export default class Button extends Component {
 
@@ -9,7 +10,7 @@ export default class Button extends Component {
         spinnerColor: 'white',
         label: '',
         onPress: () => {},
-        usFetching: false
+        isFetching: false
 
     }
 
@@ -23,7 +24,12 @@ export default class Button extends Component {
         return (
             <TouchableOpacity style={styles.container} onPress={() => this._onPress()}>
                 <Text style={[styles.label, this.props.containerStyle]}>{ this.props.label }</Text>
-                {this.props.isFetching ? <ActivityIndicator animating color= {this.props.spinnerColor} style={[styles.spiner, this.props]}/> : null }
+                {this.props.isFetching ? <Spinner
+                                            style={ styles.spinner } 
+                                            isVisible={ this.props.isFetching }
+                                            size={20}
+                                            type='WordPress'
+                                            color='white'/> : null }
             </TouchableOpacity>
         )
     }

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 //Import REACT-NATIVE
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
 
 //Import WEBSERVICES
 import { fetch } from 'pruebas_marvel/src/webservices/webservices'
@@ -10,6 +10,7 @@ import { API_KEY } from 'pruebas_marvel/src/webservices/constants';
 
 //Import COMPONENTS
 import EventsCell from './EventsCell'
+import Spinner from 'react-native-spinkit'
 
 //Import NAVIGATION
 import { Actions } from 'react-native-router-flux'
@@ -36,12 +37,12 @@ class EventsList extends Component {
 
     //RENDERS
     renderFooter() {
-        return  <ActivityIndicator
-            animating={ this.props.isFetching }
-            size='large'
-            color='white'
-            style={{ marginVertical: 20 }}
-        />
+        return  <Spinner
+        style={ styles.spinner } 
+        isVisible={ this.props.isFetching }
+        size={150}
+        type='WordPress'
+        color='white'/>
     }
 
     renderItem(item, index) {
@@ -82,7 +83,7 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         updateSelected: (item) => {
             dispatch(EventsActions.updateEventSelected(item))
-            Actions.EventView({ item: item })
+            Actions.EventView({title: item.title})
         },
     }
 }
@@ -94,5 +95,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.background,
+    },
+    spinner: {
+        position: 'absolute',
+        top: Dimensions.get('window').height / 3, 
+        left: Dimensions.get('window').width / 3, 
     },
 })

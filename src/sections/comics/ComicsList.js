@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 //Import REACT-NATIVE
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
 
 //Import WEBSERVICES
 import { fetch } from 'pruebas_marvel/src/webservices/webservices'
@@ -10,6 +10,7 @@ import { API_KEY } from 'pruebas_marvel/src/webservices/constants';
 
 //Import COMPONENTS
 import ComicsCell from './ComicsCell'
+import Spinner from 'react-native-spinkit'
 
 //Import NAVIGATION
 import { Actions } from 'react-native-router-flux'
@@ -31,18 +32,17 @@ class ComicsList extends Component {
 
     //FUNCIONES
     onCellTapped(item) {
-        console.log('comic item onCellTapped: ', item)
         this.props.updateSelected(item)
     }
 
     //RENDERS
     renderFooter() {
-        return  <ActivityIndicator
-            animating={ this.props.isFetching }
-            size='large'
-            color='white'
-            style={{ marginVertical: 20 }}
-        />
+        return  <Spinner
+        style={ styles.spinner } 
+        isVisible={ this.props.isFetching }
+        size={150}
+        type='WordPress'
+        color='white'/>
     }
 
     renderItem(item, index) {
@@ -51,7 +51,7 @@ class ComicsList extends Component {
             onCellTapped={ () => this.onCellTapped(item) }/>
     }
 
-    render() {  
+    render() { 
         return (
             <View style={ styles.container }>
                 <FlatList
@@ -62,6 +62,9 @@ class ComicsList extends Component {
                     extraData={ this.state }
                     numColumns={2}
                 />
+                
+                <Text style={ styles.textNo }>{ 'No comics available' }</Text>
+                
             </View>
         );  
     }
@@ -72,7 +75,7 @@ const mapStateToProps = (state) => {
     return {
         list: state.comics.list,
         selected: state.characters.item,
-        isFetching: state.comics.isFetching
+        isFetching: state.comics.isFetching,
     }
 }
 
@@ -83,7 +86,7 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         updateSelected: (item) => {
             dispatch(ComicsActions.updateComicSelected(item))
-            Actions.ComicView({ item: item })
+            Actions.ComicView()
         },
     }
 }
@@ -95,5 +98,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.background,
+    },
+    spinner: {
+        position: 'absolute',
+        top: Dimensions.get('window').height / 3, 
+        left: Dimensions.get('window').width / 3, 
+    },
+    textNo: {
+        flex: 1,
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'white',
     },
 })

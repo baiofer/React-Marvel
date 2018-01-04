@@ -13,7 +13,7 @@ export default class Input extends Component {
         error: '',
         placeholder: '',
         onChangeText: () => {},
-
+        multiline: false,
     }
 
  
@@ -29,6 +29,7 @@ export default class Input extends Component {
                     placeholderTextColor={'grey'}
                     style={[styles.input, this.props.inputStyle]}
                     underlineColorAndroid={'transparent'}
+                    multiline={ this.props.multiline }
                 />
                 {this.props.error ? <Text style={[styles.error, this.props.errorStyle]}>{this.props.error}</Text> : null }
             </View>
@@ -39,7 +40,6 @@ export default class Input extends Component {
 const styles = StyleSheet.create({
 
     container: {
-       
         backgroundColor: Colors.backgroundColor
     },
     error: {

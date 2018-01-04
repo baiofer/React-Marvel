@@ -29,10 +29,11 @@ export function updateEventSelected(value) {
 export function fetchEventsList(url) {
     return (dispatch, getState) => {
         dispatch(setEventsFetching(true))
+        dispatch(updateEventsList([]))
         const fetchUrl = url + '?apikey=' + API_KEY;
         
         fetch(fetchUrl).then(response => {
-            //console.log("fetch events response: ", response)
+            console.log("fetch events response: ", response)
             dispatch(setEventsFetching(false))
             const list = response.data.results
             dispatch(updateEventsList(list))

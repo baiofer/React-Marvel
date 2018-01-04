@@ -11,6 +11,7 @@ import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;
 import java.util.List;
+import com.imagepicker.ImagePickerPackage; 
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -24,7 +25,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new RNSpinkitPackage()
+          new RNSpinkitPackage(),
+          new ImagePickerPackage()
       );
     }
 

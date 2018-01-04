@@ -7,12 +7,15 @@ import { View, StyleSheet, Image, Text, Dimensions, ScrollView } from 'react-nat
 //Import COMMONS
 import { Colors } from 'pruebas_marvel/src/commons'
 
-export default class SerieView extends Component {
+//Imports REDUX
+import { connect } from 'react-redux'
+
+class SerieView extends Component {
 
     //RENDER
     render() {
         const item = this.props.item;
-        const name = item.name ? item.name : '';
+        const name = item.title ? item.title : '';
         const description = item.description ? item.description : '';
         let image = item.thumbnail.path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" ? { uri: item.thumbnail.path + '.' + item.thumbnail.extension} : require ('pruebas_marvel/src/resources/image_not_available.jpeg');
         const resourceURI = item.resourceURI ? item.resourceURI : '';
@@ -32,6 +35,15 @@ export default class SerieView extends Component {
         )
     }
 }
+
+//REDUX
+const mapStateToProps = (state) => {
+    return {
+        item: state.series.serieItem,
+    }
+}
+
+export default connect(mapStateToProps, null)(SerieView)
 
 //ESTILOS
 const styles = StyleSheet.create({

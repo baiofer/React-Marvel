@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         updateSelected: (item) => {
             dispatch(CharactersActions.updateCharacterSelected(item))
-            Actions.CharacterView({ item: item })
+            Actions.CharacterView({ title: item.name })
         },
     }
 }

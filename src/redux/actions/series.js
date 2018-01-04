@@ -29,10 +29,11 @@ export function updateSerieSelected(value) {
 export function fetchSeriesList(url) {
     return (dispatch, getState) => {
         dispatch(setSeriesFetching(true))
+        dispatch(updateSeriesList([]))
         const fetchUrl = url + '?apikey=' + API_KEY;
         
         fetch(fetchUrl).then(response => {
-            //console.log("fetch series response: ", response)
+            console.log("fetch series response: ", response)
             dispatch(setSeriesFetching(false))
             const list = response.data.results
             dispatch(updateSeriesList(list))

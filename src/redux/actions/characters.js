@@ -5,6 +5,9 @@ import * as types from '../types/characters'
 import { API_KEY } from 'pruebas_marvel/src/webservices/constants';
 import { fetch } from 'pruebas_marvel/src/webservices/webservices'
 
+//Imports de REACT-NATIVE-ROUTER-FLUX
+import { Actions } from 'react-native-router-flux';
+
 function updateCharactersList(value) {
     return {
         type: types.CHARACTERS_UPDATE_LIST,
@@ -29,10 +32,11 @@ export function updateCharacterSelected(value) {
 export function fetchCharactersList() {
     return (dispatch, getState) => {
         dispatch(setCharactersFetching(true))
+        dispatch(updateCharactersList([]))
         const fetchUrl = '/characters?apikey=' + API_KEY;
         
         fetch(fetchUrl).then(response => {
-            console.log("fetch character response: ", response)
+            //console.log("fetch character response: ", response)
             dispatch(setCharactersFetching(false))
             const list = response.data.results
             dispatch(updateCharactersList(list))
@@ -40,5 +44,14 @@ export function fetchCharactersList() {
             //console.log('error: ', error)
             dispatch(setCharactersFetching(false))
         })
+    }
+}
+
+export function postCharacter(character) {
+    return (dispatch, getState) => {
+        const state = getState()
+        const list = state.characters.list
+        //Aquí hariamos el post(uri, character)
+        Actions.pop()
     }
 }

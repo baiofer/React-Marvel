@@ -3,7 +3,8 @@ import * as types from '../types/events'
 const initialState = {
     list: [],
     item: null,
-    isFetching: false
+    isFetching: false,
+    eventItem: null,
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -22,6 +23,11 @@ export default function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 isFetching: action.value
+            };
+        case types.EVENTS_UPDATE_EVENT:
+            return {
+                ...state,
+                eventItem: action.value
             };
         default:
             return state;

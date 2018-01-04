@@ -3,7 +3,8 @@ import * as types from '../types/series'
 const initialState = {
     list: [],
     item: null,
-    isFetching: false
+    isFetching: false,
+    serieItem: null,
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -22,6 +23,11 @@ export default function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 isFetching: action.value
+            };
+        case types.SERIES_UPDATE_SERIE:
+            return {
+                ...state,
+                serieItem: action.value
             };
         default:
             return state;
