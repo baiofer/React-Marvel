@@ -2,7 +2,8 @@
 import React, { Component } from 'react'
 
 //Imports REACT-NATIVE
-import { Platform, View, TouchableOpacity, Text, Image, StyleSheet, Dimensions } from 'react-native'
+import { Platform, View, TouchableOpacity, Text, StyleSheet, Dimensions } from 'react-native'
+import Image from 'react-native-image-progress'
 
 export default class EventsCell extends Component {
     //PROPIEDADES POR DEFECTO

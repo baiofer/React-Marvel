@@ -2,7 +2,8 @@
 import React, { Component } from 'react'
 
 //Imports REACT-NATIVE
-import { Platform, View, TouchableOpacity, Text, Image, StyleSheet, Dimensions } from 'react-native'
+import { Platform, View, TouchableOpacity, Text, StyleSheet, Dimensions } from 'react-native'
+import Image from 'react-native-image-progress'
 
 export default class SeriesCell extends Component {
     //PROPIEDADES POR DEFECTO
@@ -28,7 +29,8 @@ export default class SeriesCell extends Component {
                 <Image 
                     source={ image } 
                     style={ styles.image } 
-                    resizeMode={ 'stretch' }/>
+                    resizeMode={ 'stretch' }
+                />
                 <View style={ styles.textContainer }>
                     <Text style={ styles.name }>{ name }</Text>
                 </View>

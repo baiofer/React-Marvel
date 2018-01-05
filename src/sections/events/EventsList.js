@@ -101,4 +101,11 @@ const styles = StyleSheet.create({
         top: Dimensions.get('window').height / 3, 
         left: Dimensions.get('window').width / 3, 
     },
+    textNo: {
+        flex: 1,
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'white',
+    },
 })

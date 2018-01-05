@@ -24,7 +24,7 @@ export default class Button extends Component {
         return (
             <TouchableOpacity style={styles.container} onPress={() => this._onPress()}>
                 <Text style={[styles.label, this.props.containerStyle]}>{ this.props.label }</Text>
-                {this.props.isFetching ? <Spinner
+                { this.props.isFetching ? <Spinner
                                             style={ styles.spinner } 
                                             isVisible={ this.props.isFetching }
                                             size={20}

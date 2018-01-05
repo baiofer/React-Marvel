@@ -38,7 +38,7 @@ export function fetchComicsList(url) {
             const list = response.data.results
             dispatch(updateComicsList(list))
         }).catch( error => {
-            console.log('error: ', error)
+            //console.log('error: ', error)
             dispatch(setComicsFetching(false))
         })
     }

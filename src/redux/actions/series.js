@@ -33,12 +33,12 @@ export function fetchSeriesList(url) {
         const fetchUrl = url + '?apikey=' + API_KEY;
         
         fetch(fetchUrl).then(response => {
-            console.log("fetch series response: ", response)
+            //console.log("fetch series response: ", response)
             dispatch(setSeriesFetching(false))
             const list = response.data.results
             dispatch(updateSeriesList(list))
         }).catch( error => {
-            console.log('error: ', error)
+            //console.log('error: ', error)
             dispatch(setSeriesFetching(false))
         })
     }

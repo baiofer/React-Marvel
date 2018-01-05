@@ -62,9 +62,6 @@ class ComicsList extends Component {
                     extraData={ this.state }
                     numColumns={2}
                 />
-                
-                <Text style={ styles.textNo }>{ 'No comics available' }</Text>
-                
             </View>
         );  
     }
