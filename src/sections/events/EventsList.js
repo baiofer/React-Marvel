@@ -24,15 +24,27 @@ import * as EventsActions from 'pruebas_marvel/src/redux/actions/events'
 
 class EventsList extends Component {
 
+    //PROPS
+    constructor(props) {
+        super(props)
+        this.onEndReached = this.onEndReached.bind(this)
+    }
+
     //CICLO DE VIDA
     componentWillMount() {
-        const url = this.props.selected.events.collectionURI
-        this.props.fetchEventsList(url)
+        this.props.initEventsList()
     }
 
     //FUNCIONES
     onCellTapped(item) {
         this.props.updateSelected(item)
+    }
+
+    onEndReached() {
+        if (this.props.list.length < this.props.total && !this.props.isFetching) {
+            let newOffset = this.props.offset + 20
+            this.props.fetchEventsList(newOffset)
+        }
     }
 
     //RENDERS
@@ -58,6 +70,7 @@ class EventsList extends Component {
                     data={ this.props.list }
                     ListFooterComponent={ ()=> this.renderFooter() }
                     renderItem={ ({ item, index }) => this.renderItem(item, index)}
+                    onEndReached = { this.onEndReached }
                     keyExtractor={ (item, index) => index}
                     extraData={ this.state }
                     numColumns={2}
@@ -72,14 +85,20 @@ const mapStateToProps = (state) => {
     return {
         list: state.events.list,
         selected: state.characters.item,
-        isFetching: state.events.isFetching
+        isFetching: state.events.isFetching,
+        total: state.events.total,
+        offset: state.events.offset,
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchEventsList: (url) => {
-            dispatch(EventsActions.fetchEventsList(url))
+        initEventsList: () => {
+            dispatch(EventsActions.initEventsList())
+        },
+        fetchEventsList: (offset) => {
+            dispatch(EventsActions.updateEventsListOffset(offset))
+            dispatch(EventsActions.fetchEventsList())
         },
         updateSelected: (item) => {
             dispatch(EventsActions.updateEventSelected(item))

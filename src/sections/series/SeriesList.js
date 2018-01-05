@@ -24,15 +24,27 @@ import * as SeriesActions from 'pruebas_marvel/src/redux/actions/series'
 
 class SeriesList extends Component {
 
+    //PROPS
+    constructor(props) {
+        super(props)
+        this.onEndReached = this.onEndReached.bind(this)
+    }
+
     //CICLO DE VIDA
     componentWillMount() {
-        const url = this.props.selected.series.collectionURI
-        this.props.fetchSeriesList(url)
+        this.props.initSeriesList()
     }
 
     //FUNCIONES
     onCellTapped(item) {
         this.props.updateSelected(item)
+    }
+
+    onEndReached() {
+        if (this.props.list.length < this.props.total && !this.props.isFetching) {
+            let newOffset = this.props.offset + 20
+            this.props.fetchSeriesList(newOffset)
+        }
     }
 
     //RENDERS
@@ -58,6 +70,7 @@ class SeriesList extends Component {
                     data={ this.props.list }
                     ListFooterComponent={ ()=> this.renderFooter() }
                     renderItem={ ({ item, index }) => this.renderItem(item, index)}
+                    onEndReached = { this.onEndReached }
                     keyExtractor={ (item, index) => index}
                     extraData={ this.state }
                     numColumns={2}
@@ -72,14 +85,20 @@ const mapStateToProps = (state) => {
     return {
         list: state.series.list,
         selected: state.characters.item,
-        isFetching: state.series.isFetching
+        isFetching: state.series.isFetching,
+        total: state.series.total,
+        offset: state.series.offset,
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchSeriesList: (url) => {
-            dispatch(SeriesActions.fetchSeriesList(url))
+        initSeriesList: () => {
+            dispatch(SeriesActions.initSeriesList())
+        },
+        fetchSeriesList: (offset) => {
+            dispatch(SeriesActions.updateSeriesListOffset(offset))
+            dispatch(SeriesActions.fetchSeriesList())
         },
         updateSelected: (item) => {
             dispatch(SeriesActions.updateSerieSelected(item))

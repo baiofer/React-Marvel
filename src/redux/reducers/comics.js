@@ -5,6 +5,8 @@ const initialState = {
     item: null,
     isFetching: false,
     comicItem: null,
+    offset: 0,
+    total:0,
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -12,12 +14,18 @@ export default function reducer(state = initialState, action = {}) {
         case types.COMICS_UPDATE_LIST:
             return {
                 ...state,
-                list: action.value
+                list: action.list,
+                total: action.total,
             };
         case types.CHARACTERS_UPDATE_CHARACTER:
             return {
                 ...state,
                 item: action.value
+            };
+        case types.COMICS_UPDATE_LIST_OFFSET:
+            return {
+                ...state,
+                offset: action.value
             };
         case types.COMICS_SET_FETCHING:
             return {

@@ -20,15 +20,27 @@ import { connect } from 'react-redux'
 import * as CharactersActions from 'pruebas_marvel/src/redux/actions/characters'
 
 class CharacterList extends Component {
+    //PROPS
+    constructor(props) {
+        super(props)
+        this.onEndReached = this.onEndReached.bind(this)
+    }
 
     //CICLO DE VIDA
     componentWillMount() {
-        this.props.fetchCharactersList()
+        this.props.initCharactersList()
     }
 
     //FUNCIONES
     onCellTapped(item) {
         this.props.updateSelected(item)        
+    }
+
+    onEndReached() {
+        if (this.props.list.length < this.props.total && !this.props.isFetching) {
+            let newOffset = this.props.offset + 20
+            this.props.fetchCharactersList(newOffset)
+        }
     }
 
     //RENDERS
@@ -55,6 +67,7 @@ class CharacterList extends Component {
                     data={ this.props.list }
                     ListFooterComponent={ ()=> this.renderFooter() }
                     renderItem={ ({ item, index }) => this.renderItem(item, index)}
+                    onEndReached = { this.onEndReached }
                     keyExtractor={ (item, index) => index}
                     extraData={ this.state }
                     numColumns={2}
@@ -68,13 +81,19 @@ class CharacterList extends Component {
 const mapStateToProps = (state) => {
     return {
         list: state.characters.list,
-        isFetching: state.characters.isFetching
+        isFetching: state.characters.isFetching,
+        total: state.characters.total,
+        offset: state.characters.offset,
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchCharactersList: () => {
+        initCharactersList: () => {
+            dispatch(CharactersActions.initCharactersList())
+        },
+        fetchCharactersList: (offset) => {
+            dispatch(CharactersActions.updateCharactersListOffset(offset))
             dispatch(CharactersActions.fetchCharactersList())
         },
         updateSelected: (item) => {

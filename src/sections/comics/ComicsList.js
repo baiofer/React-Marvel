@@ -24,15 +24,27 @@ import * as ComicsActions from 'pruebas_marvel/src/redux/actions/comics'
 
 class ComicsList extends Component {
 
+    //PROPS
+    constructor(props) {
+        super(props)
+        this.onEndReached = this.onEndReached.bind(this)
+    }
+
     //CICLO DE VIDA
     componentWillMount() {
-        const url = this.props.selected.comics.collectionURI
-        this.props.fetchComicsList(url)
+        this.props.initComicsList()
     }
 
     //FUNCIONES
     onCellTapped(item) {
         this.props.updateSelected(item)
+    }
+
+    onEndReached() {
+        if (this.props.list.length < this.props.total && !this.props.isFetching) {
+            let newOffset = this.props.offset + 20
+            this.props.fetchComicsList(newOffset)
+        }
     }
 
     //RENDERS
@@ -58,6 +70,7 @@ class ComicsList extends Component {
                     data={ this.props.list }
                     ListFooterComponent={ ()=> this.renderFooter() }
                     renderItem={ ({ item, index }) => this.renderItem(item, index)}
+                    onEndReached = { this.onEndReached }
                     keyExtractor={ (item, index) => index}
                     extraData={ this.state }
                     numColumns={2}
@@ -73,13 +86,19 @@ const mapStateToProps = (state) => {
         list: state.comics.list,
         selected: state.characters.item,
         isFetching: state.comics.isFetching,
+        total: state.comics.total,
+        offset: state.comics.offset,
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchComicsList: (url) => {
-            dispatch(ComicsActions.fetchComicsList(url))
+        initComicsList: () => {
+            dispatch(ComicsActions.initComicsList())
+        },
+        fetchComicsList: (offset) => {
+            dispatch(ComicsActions.updateComicsListOffset(offset))
+            dispatch(ComicsActions.fetchComicsList())
         },
         updateSelected: (item) => {
             dispatch(ComicsActions.updateComicSelected(item))

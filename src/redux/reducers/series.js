@@ -5,6 +5,8 @@ const initialState = {
     item: null,
     isFetching: false,
     serieItem: null,
+    offset: 0,
+    total: 0,
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -12,12 +14,18 @@ export default function reducer(state = initialState, action = {}) {
         case types.SERIES_UPDATE_LIST:
             return {
                 ...state,
-                list: action.value
+                list: action.list,
+                total: action.total,
             };
         case types.CHARACTERS_UPDATE_CHARACTER:
             return {
                 ...state,
                 item: action.value
+            };
+        case types.SERIES_UPDATE_LIST_OFFSET:
+            return {
+                ...state,
+                offset: action.value
             };
         case types.SERIES_SET_FETCHING:
             return {

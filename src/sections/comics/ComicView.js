@@ -15,7 +15,6 @@ class ComicView extends Component {
     //RENDER
     render() {
         const item = this.props.item;
-        console.log('comic item: ', this.props)
         if (!item) return null
         const name = item.name ? item.name : '';
         const description = item.description ? item.description : '';
